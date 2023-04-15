@@ -46,7 +46,7 @@ const getSmartContract = async () => {
 
 
   const network = await provider.getNetwork();
-  setCurrentNetwork(network.chainId);
+  setCurrentNetwork(networks[network.chainId]);
 
   
 
@@ -61,7 +61,7 @@ const getSmartContract = async () => {
   }
 
   const eye4eyeContract = new ethers.Contract(
-    networks[currentNetwork].contractAddress,
+    currentNetwork.contractAddress,
     contractABI,
     signer
   );
@@ -72,7 +72,7 @@ const getSmartContract = async () => {
 const getReadOnlySmartContract = () => {
   const provider = new ethers.providers.Web3Provider(ethereum);
   const eye4eyeContract = new ethers.Contract(
-    networks[currentNetwork].contractAddress,
+    currentNetwork.contractAddress,
     contractABI,
     provider
   );
