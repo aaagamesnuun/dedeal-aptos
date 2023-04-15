@@ -27,6 +27,7 @@ const Navbar = () => {
           <a href="/">DeDeal</a>
         </h2>
       </div>
+
       <div className="wallet-info">
         <span className='wallet-address'>
           {networks[currentNetwork] ? networks[currentNetwork]?.name : "change network"}

@@ -6,6 +6,8 @@ export const Eye4eyeContext = createContext();
 
 const { ethereum } = window;
 
+
+
 export const Eye4eyeProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState("");
   const [currentNetwork, setCurrentNetwork] = useState("");
