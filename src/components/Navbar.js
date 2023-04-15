@@ -24,7 +24,7 @@ const Navbar = () => {
     <nav>
       <div className="logo">
         <h2>
-          <a href="/">DeDeal:tky</a>
+          <a href="/">DeDeal</a>
         </h2>
       </div>
 

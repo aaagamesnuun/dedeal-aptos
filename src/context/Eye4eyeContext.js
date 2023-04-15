@@ -44,8 +44,11 @@ const getSmartContract = async () => {
   const provider = new ethers.providers.Web3Provider(ethereum);
   const signer = provider.getSigner();
 
+
   const network = await provider.getNetwork();
   setCurrentNetwork(network.chainId);
+
+  
 
   if (!networks[currentNetwork]) {
     alert(
@@ -108,17 +111,22 @@ const getReadOnlySmartContract = () => {
     const msgCatch = (_msgValue) => {
       console.log("_msgValue:", _msgValue);
     };
-    if (ethereum) {
-      if(currentNetwork){
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner(); 
+    
+    if (ethereum && currentNetwork && networks[currentNetwork]) {
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      const contractAddress = networks[currentNetwork].contractAddress;
+  
+      if (contractAddress) {
         const eye4eyeContract = new ethers.Contract(
-          networks[currentNetwork].contractAddress,
+          contractAddress,
           contractABI,
           signer
         );
         const filter = eye4eyeContract.filters.eventMsgValue(null);
         eye4eyeContract.on(filter, msgCatch);
+      } else {
+        console.warn(`No contract address found for the current network (${currentNetwork}).`);
       }
     }
   }, [currentNetwork]);
