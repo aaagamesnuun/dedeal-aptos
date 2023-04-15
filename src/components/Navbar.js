@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Eye4eyeContext } from '../context/Eye4eyeContext';
 import { networks } from '../utils/connect';
 
+
 const Navbar = () => {
   const { connectWallet, getCurrentAccount, getCurrentNetwork } = useContext(Eye4eyeContext);
   const [accountAddress, setAccountAddress] = useState('');
@@ -9,6 +10,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const currentAccount = getCurrentAccount();
+    console.log('currentAccount:', currentAccount);
     const currentNetwork = getCurrentNetwork();
     if (currentAccount) {
       setAccountAddress(currentAccount.slice(0, 6) + '...' + currentAccount.slice(-4));
