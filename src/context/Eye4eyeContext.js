@@ -1,12 +1,10 @@
 import { ethers } from "ethers";
 import { createContext, useEffect } from "react";
-import { contractABI, contractAddress, networks } from "../utils/connect";
+import { contractABI, networks } from "../utils/connect";
 import React, { useState } from "react";
 export const Eye4eyeContext = createContext();
 
 const { ethereum } = window;
-
-
 
 export const Eye4eyeProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState("");
@@ -20,28 +18,50 @@ export const Eye4eyeProvider = ({ children }) => {
     _dealId: "",
   });
   // Get the smart contract
+// const getSmartContract = async () => {
+//   const provider = new ethers.providers.Web3Provider(ethereum);
+//   const signer = provider.getSigner();
+
+//   const network = await provider.getNetwork();
+  
+//   // currentNetworkがnetworksに存在するか確認
+//   // なければ、alertでエラーを出す
+
+//   if(!networks[currentNetwork]){
+//     alert("Please change network to the network \n" + (Object.values(networks).map((network) => network.name)).join("\nor "))
+//     return;
+//   }
+//   // Eye4eyeProvider.currentNetwork = provider.network;
+//   // const currentNetwork = provider.network;
+//   const eye4eyeContract = new ethers.Contract(
+//     contractAddress,
+//     contractABI,
+//     signer
+//   );
+
+//   console.log(provider, signer, eye4eyeContract);
 const getSmartContract = async () => {
   const provider = new ethers.providers.Web3Provider(ethereum);
   const signer = provider.getSigner();
 
   const network = await provider.getNetwork();
-  
-  // currentNetworkがnetworksに存在するか確認
-  // なければ、alertでエラーを出す
+  setCurrentNetwork(network.chainId);
 
-  if(!networks[currentNetwork]){
-    alert("Please change network to the network \n" + (Object.values(networks).map((network) => network.name)).join("\nor "))
+  if (!networks[currentNetwork]) {
+    alert(
+      "Please change network to the network \n" +
+        Object.values(networks)
+          .map((network) => network.name)
+          .join("\nor ")
+    );
     return;
   }
-  // Eye4eyeProvider.currentNetwork = provider.network;
-  // const currentNetwork = provider.network;
+
   const eye4eyeContract = new ethers.Contract(
-    contractAddress,
+    networks[currentNetwork].contractAddress,
     contractABI,
     signer
   );
-
-  console.log(provider, signer, eye4eyeContract);
 
   return eye4eyeContract;
 };
@@ -49,7 +69,7 @@ const getSmartContract = async () => {
 const getReadOnlySmartContract = () => {
   const provider = new ethers.providers.Web3Provider(ethereum);
   const eye4eyeContract = new ethers.Contract(
-    contractAddress,
+    networks[currentNetwork].contractAddress,
     contractABI,
     provider
   );
@@ -101,7 +121,7 @@ const getReadOnlySmartContract = () => {
         eye4eyeContract.on(filter, msgCatch);
       }
     }
-  }, []);
+  }, [currentNetwork]);
 
   const connectWallet = async () => {
     if (!ethereum) return alert("Install Metamask");
