@@ -1,83 +1,41 @@
-# Getting Started with Create React App
+DeDeal:Decentrized Escrow for Off-Chain Deals without Any Third Party
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+DeDeal is a smart contract that allows secure deposits for deals between two parties, the seller and the buyer. The contract ensures that both parties deposit an agreed amount of crypto, and it holds the deposits until the deal is executed or the deposit release time has passed.
 
-## Available Scripts
+Functions
+claim()
+The claim() function creates a new deal in the contract. It requires the seller to send an amount of crypto as the initial deposit. The function takes two arguments:
 
-In the project directory, you can run:
+_grantDeadline: The number of seconds after which the deposit can be released if not executed.
+_executeDeadlineInterval: The interval in seconds that the deposit can be executed.
+grant(uint _dealId)
+The grant() function allows the buyer to deposit an amount of crypto equal to the seller's deposit, indicating their agreement to the deal. It requires the following argument:
 
-### `npm start`
+_dealId: The ID of the deal the buyer wants to participate in.
+buyerExecuteSeller(uint _dealId)
+The buyerExecuteSeller() function allows the buyer to execute the deal by transferring twice the deposit amount. It requires the following argument:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+_dealId: The ID of the deal the buyer wants to execute.
+sellerExecuteBuyer(uint _dealId)
+The sellerExecuteBuyer() function allows the seller to execute the deal by transferring twice the deposit amount. It requires the following argument:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+_dealId: The ID of the deal the seller wants to execute.
+releaseDeposits(uint _dealId)
+The releaseDeposits() function allows the deposits to be released to their respective parties after the deposit release time has passed. It requires the following argument:
 
-### `npm test`
+_dealId: The ID of the deal for which the deposits should be released.
+getDeal(uint _dealId)
+The getDeal() function returns the details of a specific deal. It requires the following argument:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+_dealId: The ID of the deal to retrieve.
+Events
+eventDeal: Triggered when a new deal is created, a buyer participates in a deal, or a deal is executed.
+eventMsgValue: Triggered when a new deal is created, showing the initial deposit amount.
+Requirements
+The contract has several requirements for input validation:
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# dedealmainnet
-# dedealmainnet
-# dedealmainnet
-# dedealmainnet
-# dedealmainet
-# dedealmainet
-# dedealmainet
-# dedealmainet
-# dedealmainet
-# dedealtestnet
-# dedealtestnet
-# dedeal-polygon-mainnet
-# dedeal-polygon-testnet
+The buyer's and seller's deposits must be equal.
+The buyer and seller must transfer exactly twice the deposit amount when executing the deal.
+The deposit release time must not have passed when executing the deal.
+License
+This smart contract is released under the MIT License.
