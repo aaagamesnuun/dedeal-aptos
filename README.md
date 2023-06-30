@@ -89,3 +89,4 @@ The contract has several requirements for input validation:
 ## License
 
 This smart contract is released under the MIT License.
+# dedeal-aptos
